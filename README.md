@@ -19,3 +19,25 @@
     "test": "jest"
   },
 ```
+
+## First Example
+
+>This test used expect and toBe to test that two values were exactly identical.
+
+``` jsx harmony
+ function sum(a, b) {
+  return a + b;
+}
+module.exports = sum;
+```
+
+``` jsx harmony
+ const sum = require('./sum');
+
+test('adds 1 + 2 to equal 3', () => {
+  expect(sum(1, 2)).toBe(3);
+});
+```
+> npm run test (to run)
+
+
