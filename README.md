@@ -37,9 +37,9 @@ test('adds 1 + 2 to equal 3', () => {
   expect(sum(1, 2)).toBe(3);
 });
 ```
-> npm run test (to run)
-> expect(1+2)---> returns a expectation object 
->.tobe(3)----> is a matcher. tobe uses Object.is to test exact equality. If we want to check the value of an object, use toEqual
+###### npm run test (to run)
+###### expect(1+2)---> returns a expectation object 
+###### .tobe(3)----> is a matcher. tobe uses Object.is to test exact equality. If we want to check the value of an object, use toEqual
 
 ``` jsx harmony
 test('object assignment', () => {
@@ -48,9 +48,9 @@ test('object assignment', () => {
   expect(data).toEqual({one: 1, two: 2});
 });
 ```
->toEqual ---> recursively checks every field of an object or array.
+###### toEqual ---> recursively checks every field of an object or array.
 
->You can also test for the opposite of a matcher:
+###### You can also test for the opposite of a matcher:
 
 ``` jsx harmony
 test('adding positive numbers is not zero', () => {
