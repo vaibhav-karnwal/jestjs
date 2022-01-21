@@ -133,7 +133,7 @@ test('but there is a "stop" in Christoph', () => {
 });
 ```
 
-## expect(value)
+### expect(value)
 
 >We often need to check whether the value meet the required condition or not, So in that expext function is used that gives the access to the matchers to test the values. Lets say there is a method sum(1,2) which is supposed to return the value 3.
 
@@ -143,7 +143,7 @@ test("1+2 is 3",()=>{
 }
 ```
 
-## expect.extend(matchers)
+### expect.extend(matchers)
 
 >We can use expect.extend to add our own matcher to jest. Lets say we are testing a number whether it comes in the range of other numbers or not.
 
@@ -171,7 +171,7 @@ test('number comes in range or not',()=>{
 })
 ```
 
-### Async Matchers
+#### Async Matchers
 
 >expect.extend also supports async matchers. Async matchers return a promise that we have to wait for the retured value.
 
@@ -199,16 +199,114 @@ test('number comes in range or not',async ()=>{
 })
 ```
 
+### expect.anything()
+
+>expect.anything() match anything but not null and undefined value.We use it inside toEqual or toBeCalledWith instead of literal values.
+
+```jsx harmony
+test('map calls its argument with a non-null argument', () => {
+    const mock = jest.fn();
+    [1].map(x => mock(x));
+    expect(mock).toBeCalledWith(expect.anything());
+  });
+```
+
+### expect.any(constructor)
+
+>expect.any(constructor) match anything that is created inside constructor. We use it inside toEqual or toBeCalledWith instead of literal values.
+
+```jsx harmony
+function randocall(fn) {
+    return fn(Math.floor(Math.random() * 6 + 1));
+  }
+  
+  test('randocall calls its callback with a number', () => {
+    const mock = jest.fn();
+    randocall(mock);
+    expect(mock).toBeCalledWith(expect.any(Number));
+  })
+  ```
+
+### expect.arrayContaining(array)
+
+>expect.arrayContaining(array) match the received array with the expected array.
+
+```jsx harmony
+describe("match arrayContaining",()=>{
+    const expected = ["vaibhav","sai"];
+    it("match even if received contains additional elements",()=>{
+        expect(["vaibhav","sai","vamsi"]).toEqual(expect.arrayContaining(expected))
+    })
+    it("does not match if received does not contain expected elements",()=>{
+        expect(["karnwal","mohan"]).not.toEqual(expect.arrayContaining(expected))
+    })
+})
+```
+
+```jsx harmony
+describe('Beware of a misunderstanding! A sequence of dice rolls', () => {
+    const expected = [1, 2, 3, 4, 5, 6];
+    it('matches even with an unexpected number 7', () => {
+      expect([4, 1, 6, 7, 3, 5, 2, 5, 4, 6]).toEqual(
+        expect.arrayContaining(expected),
+      );
+    });
+    it('does not match without an expected number 2', () => {
+      expect([4, 1, 6, 7, 3, 5, 7, 5, 4, 6]).not.toEqual(
+        expect.arrayContaining(expected),
+      );
+    });
+  });
+
+```
+### expect assertions(number)
+
+>expect.assertions(number) verifies that a certain number of assertions must be called during the test. It is used when we are dealing with asynchronous code. In order to make sure that all callbacks to be called actually we used assertions
+
+```jsx harmony
 
 
+```
+
+## Asynchronous Code
+
+### callback
 
 
+```jsx harmony
+function fetchData(callback){
+    setTimeout(()=>{
+        callback("peanut butter");
+    },1000)
+}
 
+test('the data is peanut butter', () => {
+    function callback(data) {
+      expect(data).toBe('peanut butter');
+    }
+  
+    fetchData(callback);
+  });
+```
+>it shows a problem that the test is completing as soon as fetchdata completed,not waiting for callback function to finish. 
+>So, this problem is solved using done() function 
 
+```jsx harmony
+function fetchData(callback){
+    setTimeout(()=>{
+        callback("peanut butter");
+    },1000)
+}
 
-
-
-
+test('the data is peanut butter', done=> {
+    function callback(data) {
+      expect(data).toBe('peanut butter');
+      done();
+    }
+  
+    fetchData(callback);
+  });
+  ```
 
 
 
