@@ -4,9 +4,13 @@
 
 > testing means checking that our code meets some expectations.
 
+## What is unit testing in React?
+
+>Unit testing is a level of software testing where individual units/components of a software are tested. In the React world this means testing an individual React Component or pure functions.
+
 ## Jest
 
->Jest is a JavaScript test runner, that is, a JavaScript library for creating, running, and structuring tests.
+>Jest is a JavaScript test runner, that is, a JavaScript library for creating, running, and structuring tests. It's an open source project maintained by Facebook, and it's especially well suited for React code testing. Jest is very fast and easy to use.
 >Using NPM package, we can install it in any JavaScript project. Jest is one of the most popular test runner these days, and the default choice for React projects.
 
 ## Setting up the project
