@@ -308,6 +308,55 @@ test('the data is peanut butter', done=> {
   });
   ```
 
+### Promises
 
+>This is a more straightforward way to handle asynchronous tests. Return a promise from the test, and Jest will wait for that promise to resolve. If the promise is rejected, the test will automatically fail.
+>Lets say fetch data instead of using a callback returns a promise that is supposed to resolve the string"peanut butter"
 
+```jsx harmony
+function fetchData(){
+    return new Promise((resolve)=>{
+        setTimeout(()=>{
+            resolve("peanut butter")
+        },100)
+    })
+}
 
+test("the data is peanut butter",()=>{
+    return fetchData().then(data=>{
+        expect(data).toBe("peanut butter");
+    })
+})
+```
+>If we will not use return statement then the test will complete before the promise returned from fetchData resolves.
+
+### .resolves/.rejects
+
+>we can also use .resolves matcher in our expect statement and Jest will wait for that promise to resolve. If the promise is rejected, the test will automatically fail.
+
+```jsx harmony
+test('the data is peanut butter', () => {
+    return expect(fetchData()).resolves.toBe('peanut butter');
+  });
+
+function fetchData(){
+    return new Promise((resolve)=>{
+        setTimeout(()=>{
+            resolve("peanut butter")
+        },100)
+    })
+}
+```
+```jsx harmony
+test('the fetch fails with an error', () => {
+    return expect(fetchDataWithErrorMessage()).rejects.toMatch('error');
+  });
+
+function fetchDataWithErrorMessage(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            reject("error")
+        },100)
+    })
+}
+```
