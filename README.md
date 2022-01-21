@@ -360,3 +360,69 @@ function fetchDataWithErrorMessage(){
     })
 }
 ```
+
+### Async/Await
+
+> We can use async and await in our tests. To write an async test, use the async keyword in front of the function passed to test.
+
+```jsx harmony
+function fetchData(){
+    return new Promise((resolve)=>{
+        setTimeout(()=>{
+            resolve("peanut butter")
+        },100)
+    })
+}
+
+test('the data is peanut butter', async () => {
+    const data = await fetchData();
+    expect(data).toBe('peanut butter');
+  });
+  ```
+  ```jsx harmony
+  function fetchDataWithErrorMessage(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            reject("error")
+        },100)
+    })
+}
+
+test('the fetch fails with an error', async () => {
+    expect.assertions(1)
+    try{
+        await fetchDataWithErrorMessage();
+    }catch(e){
+        expect(e).toMatch('error');
+    }
+  });```
+  
+  ```jsx harmony
+  function fetchData(){
+    return new Promise((resolve)=>{
+        setTimeout(()=>{
+            resolve("peanut butter")
+        },100)
+    })
+}
+
+test('the data is peanut butter', async () => {
+    await expect(fetchData()).resolves.toBe('peanut butter');
+  });
+ ```
+ 
+ >We can combine async and await with .resolves or .rejects.
+ 
+ ```jsx harmony
+ function fetchDataWithErrorMessage(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            reject("error")
+        },100)
+    })
+}
+
+test('the fetch fails with an error', async () => {
+    await expect(fetchDataWithErrorMessage()).rejects.toMatch('error');
+  });
+  ```
