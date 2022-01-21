@@ -132,3 +132,84 @@ test('but there is a "stop" in Christoph', () => {
   expect('Christoph').toMatch(/stop/);
 });
 ```
+
+## expect(value)
+
+>We often need to check whether the value meet the required condition or not, So in that expext function is used that gives the access to the matchers to test the values. Lets say there is a method sum(1,2) which is supposed to return the value 3.
+
+```jsx harmony
+test("1+2 is 3",()=>{
+  expect(sum(1,2).tobe(3));
+}
+```
+
+## expect.extend(matchers)
+
+>We can use expect.extend to add our own matcher to jest. Lets say we are testing a number whether it comes in the range of other numbers or not.
+
+```jsx harmony
+expect.extend({
+    toBeWithInRange(number,floor, ceil){
+        const check = number>=floor && number<=ceil;
+        if (check){
+            return {
+                message:()=>`expected ${number} not to be within range ${floor}-${ceil}`,
+                pass: true,
+            }
+        }else{
+            return{
+                message:()=> `${number} to be within range ${floor}-${ceil}`,
+                pass:false,
+            }
+        }
+    }
+})
+
+test('number comes in range or not',()=>{
+    expect(100).toBeWithInRange(90,110);
+    expect(100).not.toBeWithInRange(90,99);
+})
+```
+
+### Async Matchers
+
+>expect.extend also supports async matchers. Async matchers return a promise that we have to wait for the retured value.
+
+```jsx harmony
+expect.extend({
+    async toBeWithInRange(number,floor, ceil){
+        const check = number>=floor && number<=ceil;
+        if (check){
+            return {
+                message:()=>`expected ${number} not to be within range ${floor}-${ceil}`,
+                pass: true,
+            }
+        }else{
+            return{
+                message:()=> `${number} to be within range ${floor}-${ceil}`,
+                pass:false,
+            }
+        }
+    }
+})
+
+test('number comes in range or not',async ()=>{
+    await expect(100).toBeWithInRange(90,110);
+    await expect(100).not.toBeWithInRange(90,99);
+})
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
